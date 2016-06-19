@@ -43,7 +43,9 @@ void ofApp::draw(){
             ofDrawCircle(i, j, 10*valueG/255.0);
             ofSetColor(0, 0, 255, alpha);
             ofDrawCircle(i, j, 10*valueB/255.0);
-            
+        }
+    }
+    
             
             // float型の配列にFFT結果を格納
             vector<float> buffer;
@@ -55,20 +57,19 @@ void ofApp::draw(){
             
             for (int i = 0; i < buffer.size(); i++) {
                 float hue = ofMap(i, 0, buffer.size(), 0, 160);
-                //ofColor col;
-                //col.setHsb(hue, 255, 255);
-                //ofSetColor(col);
+                ofColor col;
+                col.setHsb(hue, 255, 255);
+                ofSetColor(col);
                 
                 
-                float rx = ofMap(i, 0, buffer.size(), 0, ofGetWidth());
-                float lx = ofMap(i, 0, buffer.size(), 0, ofGetWidth());
-                float y = ofMap(buffer[i], 0, 1, ofGetHeight(), 0) ;
-                ofDrawLine(rx, ofGetHeight(), rx, y);
-                ofDrawLine(lx, ofGetHeight(), lx, y);
+                float rx = ofMap(i, 0, buffer.size(), ofGetWidth() / 2.0, ofGetWidth());
+                float lx = ofMap(i, 0, buffer.size(), ofGetWidth() / 2.0, 0);
+                float y = ofMap(buffer[i], 0, 1, ofGetHeight()/2, 0) ;
+                ofDrawLine(rx, ofGetHeight()/2, rx, y);
+                ofDrawLine(lx, ofGetHeight()/2, lx, y);
             }
             
-        }
-    }
+
     
     
     //float r = buffer.size() *100;
