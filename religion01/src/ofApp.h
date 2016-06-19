@@ -24,5 +24,5 @@ class ofApp : public ofBaseApp{
     
     ofxEasyFft fft;    // ofxEasyFftインスタンス
     ofImage myImage;
-    
+    ofImage grabbedImage; //画面をキャプチャーしたイメージデータ
 };
