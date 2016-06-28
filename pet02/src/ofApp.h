@@ -45,6 +45,4 @@ class ofApp : public ofBaseApp{
     ofxFloatSlider speed;
     ofxFloatSlider friction;
 
-    
-    MyMesh a;
 };

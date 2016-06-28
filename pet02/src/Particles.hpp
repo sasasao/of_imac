@@ -27,5 +27,5 @@ public:
     
     
     ofVboMesh mesh;
-    //ofVboMesh myMesh;
+    ofMesh myMesh;
 };

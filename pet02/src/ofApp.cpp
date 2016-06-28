@@ -95,7 +95,6 @@ void ofApp::draw(){
     cam.begin();
     ofPushMatrix();
     ofRotate(ofGetElapsedTimef()*10.0);
-    a.draw();
     ofPopMatrix();
     cam.end();
     

@@ -4,15 +4,18 @@ Particles::Particles(int _maxParticles){
     maxParticles = _maxParticles;
     numParticles = 0;
     friction = 0.5;
-    mesh.setMode(OF_PRIMITIVE_POINTS);
-    /*myMesh.setMode(OF_PRIMITIVE_POINTS);
+    
     
     myMesh = ofSpherePrimitive(200,72).getMesh();
     for (int i=0; i<myMesh.getVertices().size(); i++) {
         myMesh.addColor(ofFloatColor(1.0,1.0,1.0,1.0));
-    }*/
+    }
 
+    mesh.setMode(OF_PRIMITIVE_POINTS);
+    myMesh.setMode(OF_PRIMITIVE_POINTS);
+    
 }
+
 
 void Particles::resetForce(){
     for(int i = 0; i < positions.size(); i++){
@@ -70,7 +73,7 @@ void Particles::updatePos(){
 }
 
 void Particles::update(){
-    /*for(int i=0; i<myMesh.getVertices().size(); i++){
+    for(int i=0; i<myMesh.getVertices().size(); i++){
         ofVec3f loc = myMesh.getVertices()[i] / 300.0;
         
         float noise = ofMap(ofNoise(loc.x, loc.y, loc.z,ofGetElapsedTimef()), 0, 1, 80, 240);
@@ -79,7 +82,7 @@ void Particles::update(){
         
         float c = ofMap(ofNoise(loc.x, loc.y, loc.z, ofGetElapsedTimef()), 0, 1, 0.5, 1.0);
         myMesh.setColor(i, ofFloatColor(c,c,c,1.0));
-    }*/
+    }
 
 
     
@@ -93,16 +96,16 @@ void Particles::update(){
 }
 
 void Particles::draw(){
-    //myMesh.clear();
+    myMesh.clear();
     mesh.clear();
     for (int i = 0; i < positions.size(); i++) {
         mesh.addVertex(ofVec3f(positions[i].x, positions[i].y));
         mesh.addColor(ofFloatColor(1.0,1.0,1.0));
-        //myMesh.addVertex(ofVec3f(positions[i].x, positions[i].y, positions[i].z));
-        //myMesh.addColor(ofFloatColor(1.0,1.0,1.0));
+        myMesh.addVertex(ofVec3f(positions[i].x, positions[i].y, positions[i].z));
+        myMesh.addColor(ofFloatColor(1.0,1.0,1.0));
     }
     mesh.draw();
-    //myMesh.draw();
+    myMesh.draw();
 }
 
 void Particles::addParticle(ofVec2f _position, ofVec2f _velocity, ofColor _color){
