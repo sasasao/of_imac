@@ -20,9 +20,13 @@ void ofApp::setup(){
     
     //球からメッシュを生成
     myMesh = ofSpherePrimitive(100, 50).getMesh();
+    meshB = ofSpherePrimitive(200, 50).getMesh();
     //メッシュの色を設定
     for (int i = 0; i < myMesh.getVertices().size(); i++) {
         myMesh.addColor(ofFloatColor(1.0, 1.0, 1.0, 1.0));
+    }
+    for (int i = 0; i < meshB.getVertices().size(); i++) {
+        meshB.addColor(ofFloatColor(1.0, 1.0, 1.0, 1.0));
     }
 
 }
@@ -31,12 +35,9 @@ void ofApp::setup(){
 void ofApp::update(){
     //頂点の数だけ繰り返し
     for (int i = 0; i < myMesh.getVertices().size(); i++) {
-        Meme meme = memes[i];
-        //map関数でデータを高さに適した値に変換
-        float boxHeight = ofMap(meme.zone_focus, min_focus, max_focus, 0.1, 50);
         
-        //頂点の位置を取得
-        ofVec3f loc = myMesh.getVertices()[i] / 100.0;
+                //頂点の位置を取得
+        ofVec3f loc = myMesh.getVertices()[i] / max_posture;
         //perlinノイズを生成
         float noise = ofMap(ofNoise(loc.x, loc.y, loc.z, ofGetElapsedTimef()), 0, 1, min_focus, max_focus);
         float pos_noise = ofMap(ofNoise(loc.x, loc.y, loc.z, ofGetElapsedTimef()), 0, 1, 0, ofGetHeight());
@@ -44,9 +45,24 @@ void ofApp::update(){
         ofVec3f newLoc = loc.normalize()* noise;
         myMesh.setVertex(i, newLoc);
         //頂点の色を設定
-        float c = ofMap(ofNoise(loc.x, loc.y, loc.z, ofGetElapsedTimef()),0, 1, 0.5, 1.0);
-        myMesh.setColor(i, ofFloatColor(c, c, c, 1.0));
+        float c = ofMap(ofNoise(loc.x, loc.y, loc.z, ofGetElapsedTimef()),0, 1, 0.0, 2.0);
+        myMesh.setColor(i, ofFloatColor(c, c, 200, 1.0));
     }
+    for (int i = 0; i < meshB.getVertices().size(); i++) {
+        
+        //頂点の位置を取得
+        ofVec3f loc = meshB.getVertices()[i] / max_calm;
+        //perlinノイズを生成
+        float noise = ofMap(ofNoise(loc.x, loc.y, loc.z, ofGetElapsedTimef()), 0, 1, min_calm, max_calm);
+        float pos_noise = ofMap(ofNoise(loc.x, loc.y, loc.z, ofGetElapsedTimef()), 0, 1, 0, ofGetHeight());
+        //ノイズの値で頂点位置を変更
+        ofVec3f newLoc = loc.normalize()* noise;
+        meshB.setVertex(i, newLoc);
+        //頂点の色を設定
+        float c = ofMap(ofNoise(loc.x, loc.y, loc.z, ofGetElapsedTimef()),0, 1, 0.0, 2.0);
+        meshB.setColor(i, ofFloatColor(c, c, 200, 1.0));
+    }
+
 
 }
 
@@ -56,55 +72,16 @@ void ofApp::draw(){
     cam.begin();
     
     ofPushMatrix();
+    ofTranslate(-100, 0);
+    ofRotate(ofGetElapsedTimef());
     myMesh.draw();
     ofPopMatrix();
     
-    float dim = 2;
-    
-    for(int i=0; i< memes.size(); i++){
-        
-        Meme meme = memes[i];
-        
-        //map関数でデータを高さに適した値に変換
-        float boxHeight = ofMap(meme.zone_focus, min_focus, max_focus, 0.1, 50);
-        
-        //map関数でデータをX座標に適した値に変換
-        float posX = ofMap(meme.zone_calm, min_calm, max_calm, -100, 100);
-        
-        //map関数でデータをZ座標に適した値に変換
-        float posZ = ofMap(meme.zone_posture, min_posture, max_posture, -100, 100);
-        
-        //map関数でデータを色さに適した値に変換
-        float boxColorR = ofMap(meme.zone_calm, min_calm, max_calm, 64, 255);
-        float boxColorG = ofMap(meme.zone_posture, min_posture, max_posture, 64, 255);
-        
-        ofSetColor(boxColorR, boxColorG, 255, 128);
-        
-        //ofDrawBoxでbarchartを描く
-        //ofDrawBox(x,y,z,w,h,d)
-        //x,y,zはboxの中心の座標です。
-        ofDrawBox(posX, boxHeight/2, posZ, dim, boxHeight, dim);
-        
-        
-    }
-    
-    //XZ平面のグリッドを描く
-    ofSetColor(64);
-    int minGrid = -150;
-    int maxGrid = 150;
-    int gridMargin = 10;
-    for(int i=minGrid; i<=maxGrid; i+=gridMargin){
-        if(i==0) {
-            ofSetLineWidth(1);
-        }
-        else{
-            ofSetLineWidth(0.25);
-        }
-        
-        ofDrawLine(i,0,minGrid,i,0,maxGrid);
-        ofDrawLine(minGrid,0,i,maxGrid,0,i);
-    }
-
+    ofPushMatrix();
+    ofTranslate(200, 0);
+    meshB.draw();
+    ofPopMatrix();
+   
     cam.end();
 }
 

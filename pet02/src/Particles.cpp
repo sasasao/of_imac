@@ -5,7 +5,6 @@ Particles::Particles(int _maxParticles){
     numParticles = 0;
     friction = 0.5;
     
-    
     myMesh = ofSpherePrimitive(200,72).getMesh();
     for (int i=0; i<myMesh.getVertices().size(); i++) {
         myMesh.addColor(ofFloatColor(1.0,1.0,1.0,1.0));

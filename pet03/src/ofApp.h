@@ -37,6 +37,7 @@ public:
     
     //Memeのデータを格納するmemes配列
     vector<Meme> memes;
+    Meme meme;
     
     //各データの最大最小を格納する変数
     float max_focus, min_focus;
@@ -47,4 +48,5 @@ public:
     ofLight light;
     
     ofMesh myMesh;
+    ofMesh meshB;
 };

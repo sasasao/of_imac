@@ -28,4 +28,6 @@ public:
     
     ofVboMesh mesh;
     ofMesh myMesh;
+    
+    
 };
