@@ -5,7 +5,7 @@ void ofApp::setup(){
     
     
     //dataフォルダに配置したcsvファイルの名前
-    string filePath = "meme_sample.csv";
+    string filePath = "tamabi01.csv";
     //string filePath = "001_ST.csv";
     loadCsvToMemes(filePath);
     
