@@ -1,12 +1,11 @@
 #include "MyMesh.hpp"
-/*
 
-MyMesh::MyMesh(){
 
-    
-    
+MyMesh::MyMesh(float _zone_focus, float _zone_calm, float _zone_posture) {
+    zone_focus = _zone_focus;
+    zone_calm = _zone_calm;
+    zone_posture = _zone_posture;
 }
-
 
 void MyMesh::draw(){
     
@@ -20,7 +19,6 @@ void MyMesh::draw(){
         //ofRotateY(ofGetElapsedTimef()*10.0);
         myMesh.draw();
         
-    }
+    }*/
     
 }
-*/

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ofMain.h"
+#include "MyMesh.hpp"
 
 struct Meme {
     //memeから取得したデータ各種を格納するクラス
@@ -37,6 +38,8 @@ public:
     
     //Memeのデータを格納するmemes配列
     vector<Meme> memes;
+    
+    vector<MyMesh> mes;
     
     //各データの最大最小を格納する変数
     float max_focus, min_focus;

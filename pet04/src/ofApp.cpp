@@ -211,6 +211,9 @@ void ofApp::loadCsvToMemes(string filePath){
             
         }
     }
+//    cout << memes.size() << endl;
+    mes.push_back(MyMesh(memes[0].zone_focus, memes[0].zone_calm, memes[0].zone_posture));
+
 }
 
 
