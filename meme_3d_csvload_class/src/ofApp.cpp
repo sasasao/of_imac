@@ -3,12 +3,13 @@
 //--------------------------------------------------------------
 void ofApp::setup(){
     ofSetFrameRate(60);
+    //ofBackground(149,170,194);
     ofBackground(0);
     ofEnableDepthTest();
     
     light.enable();
     light.setPosition(-100, 100, 1000);
-    cam.setDistance(1000);
+    //cam.setDistance(1000);
     
     
     width = ofGetWidth();
@@ -17,7 +18,7 @@ void ofApp::setup(){
     myImage.allocate(ofGetWidth(), ofGetHeight(), OF_IMAGE_GRAYSCALE);
     pixels = myImage.getPixels();
     
-    particleNum = 5;
+    particleNum = 1;
     particles = new Particles(particleNum);
     
     ofVec3f position = ofVec3f(ofRandom(width), ofRandom(height));
@@ -92,13 +93,12 @@ void ofApp::draw(){
     cam.begin();
     
     //ofEnableBlendMode(OF_BLENDMODE_ADD);
-    ofSetColor(0,0,255);
+    //glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     
     ofPushMatrix();
     
     for (int i = 0; i < particleNum; i++) {
         particles->draw();
-        ofRotateY(ofGetElapsedTimef()*10.0);
     }
     
     ofPopMatrix();

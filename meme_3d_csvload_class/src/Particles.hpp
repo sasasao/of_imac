@@ -8,6 +8,10 @@ struct Meme {
     float zone_calm;
     float zone_posture;
 };
+struct First {
+    float cadence;
+};
+
 
 
 class Particles {
@@ -25,6 +29,7 @@ public:
     void resetOffWalls();
     void updatePos();
     void loadCsvToMemes(string filePath);
+    void loadCsvToMemes02(string filePath02);
     
     //Meme
     vector<Meme> memes;
@@ -45,13 +50,19 @@ public:
     float posture;
     
     float percent = 0;
-    int index = 0; 
+    int index = 0;
+    
+    //First
+    vector<First> firsts;
+    float max_cadence,min_cadence;
+    
     
     //mesh
     ofMesh mesh;
     ofMesh outside;
     ofVboMesh mesh_line;
     int line_w, line_h;
+    int wire;
     
     int maxParticles;
     float pointSize;

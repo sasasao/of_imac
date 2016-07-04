@@ -1,8 +1,10 @@
 #include "Particles.hpp"
 
 Particles::Particles(int _maxParticles){
-    string filePath = "tamabi01.csv";
+    string filePath = "tamabi02.csv";
+    string filePath02 = "002_ST.csv";
     loadCsvToMemes(filePath);
+    loadCsvToMemes02(filePath02);
     
     maxParticles = _maxParticles;
     numParticles = 0;
@@ -10,8 +12,10 @@ Particles::Particles(int _maxParticles){
     
     line_w = 100;
     line_h = 100;
+    wire = 20;
 
-    mesh = ofSpherePrimitive(200, 20).getMesh();
+    mesh = ofSpherePrimitive(200, wire).getMesh();
+    outside = ofSpherePrimitive(200, wire).getMesh();
     mesh_line = ofPlanePrimitive(5, 5, line_w, line_h).getMesh();
     
     glPointSize(3.0);
@@ -52,7 +56,7 @@ void Particles::resetOffWalls(){
     float maxy = ofGetHeight();
     
     for(int i = 0; i < positions.size(); i++){
-        if (positions[i].x > maxx){
+        /*if (positions[i].x > maxx){
             positions[i].x = minx;
         }
         if (positions[i].y > maxy){
@@ -64,6 +68,12 @@ void Particles::resetOffWalls(){
         if (positions[i].y < miny){
             positions[i].y = maxy;
         }
+        if (positions[i].x < 0 || positions[i].x > ofGetWidth()) {
+            velocitys[i].x *= -1;
+        }
+        if (positions[i].y < 0 || positions[i].y > ofGetHeight()) {
+            velocitys[i].y *= -1;
+        }*/
     }
 }
 
@@ -89,15 +99,17 @@ void Particles::draw(){
     //頂点の数だけ繰り返し
     for (int i = 0; i < mesh.getVertices().size(); i++) {
         int m = ofMap(i, 0, mesh.getVertices().size(), 0, memes.size());
+        int f = ofMap(i, 0, mesh.getVertices().size(), 0, firsts.size());
         Meme meme = memes[m];
+        First first = firsts[f];
         
         
         morph_focus = ofLerp(focus, next_focus, percent);
         morph_calm = ofLerp(calm, next_calm, percent);
         morph_posture = ofLerp(posture, next_posture, percent);
-         
         
-        float posture_loc = ofMap(morph_posture, min_posture, max_posture, 100, 400);
+        
+        float posture_loc = ofMap(morph_posture, min_posture, max_posture, 50, 400);
         //頂点の位置を取得
         ofVec3f loc = mesh.getVertices()[i] / posture_loc;
         //perlinノイズを生成
@@ -105,26 +117,30 @@ void Particles::draw(){
         //ノイズの値で頂点位置を変更
         ofVec3f newLoc = loc.normalize()* noise;
         mesh.setVertex(i, newLoc);
-        mesh_line.setVertex(i, newLoc);
+        mesh_line.setVertex(i, newLoc*1.2);
+        outside.setVertex(i, newLoc*1.2);
         
-        float c = ofMap(ofNoise(loc.x, loc.y, loc.z, ofGetElapsedTimef()),0, 1, 0.5, 1.0);
         float R = ofMap(meme.zone_focus, min_focus, max_focus, 0, 1.0);
         float G = ofMap(meme.zone_calm, min_calm, max_calm, 0, 1.0);
         float B = ofMap(meme.zone_posture, min_posture, max_posture, 0, 1.0);
         
-        morph_focus = ofLerp(R, next_focus, percent);
-        
         mesh.setColor(i, ofFloatColor(R,G,B,1));
-        mesh_line.setColor(i, ofFloatColor(R,R,R,1));
+        outside.setColor(i, ofFloatColor(1.0,1.0,1.0,0.1));
+        mesh_line.setColor(i, ofFloatColor(1.0,1.0,1.0,1));
     }
-    
     
     for (int i = 0; i < positions.size(); i++) {
-        ofTranslate(positions[i].x, positions[i].y);
+        int f = ofMap(i, 0, positions.size(), 0, firsts.size());
+        First first = firsts[f];
+        ofRotateY(ofGetElapsedTimef()*10.0);
+        ofTranslate(positions[i].x *first.cadence,
+                    positions[i].y *first.cadence);
     }
+    
+    ofSetLineWidth(0.1);
     mesh.draw();
-    ofSetLineWidth(1);
-    mesh_line.drawWireframe();
+    mesh_line.draw();
+    outside.drawWireframe();
     
     percent += 0.01;
     if(percent >= 1.0){
@@ -199,6 +215,39 @@ void Particles::loadCsvToMemes(string filePath){
                 min_calm = (meme.zone_calm < min_calm) ? meme.zone_calm : min_calm;
                 max_posture = (meme.zone_posture > max_posture) ? meme.zone_posture : max_posture;
                 min_posture = (meme.zone_posture < min_posture) ? meme.zone_posture : min_posture;
+                
+            }
+            
+        }
+    }
+    
+}
+//--------------------------------------------------------------
+void Particles::loadCsvToMemes02(string filePath02){
+    ofFile file02(filePath02);
+    
+    if(!file02.exists()){
+        ofLogError("The file " + filePath02 + " is missing");
+    }
+    ofBuffer buffer(file02);
+    
+    //データをVector(配列)に読み込む
+    //CSVファイルを読み込んで、1行ごとに配列linesの要素として読み込む
+    for (ofBuffer::Line it = buffer.getLines().begin(), end = buffer.getLines().end(); it != end; ++it) {
+        string line = *it;
+        vector<string> data = ofSplitString(line, ",");
+        if (data.size()>=6) {
+            
+            First first;
+            first.cadence = ofToFloat(data[10]);
+            firsts.push_back(first);
+            
+            if(it == buffer.getLines().begin()){
+                max_cadence = min_cadence = first.cadence;
+            }
+            else{
+                //データをひとつずつ比較しながら最小値最大値を調べる
+                max_cadence = (first.cadence > max_cadence) ? first.cadence : max_cadence;
                 
             }
             
