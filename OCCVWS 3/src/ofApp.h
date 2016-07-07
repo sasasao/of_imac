@@ -148,6 +148,6 @@ public:
     
     float Rotate = 0;
     
-
+    ofLight light;
     
 };

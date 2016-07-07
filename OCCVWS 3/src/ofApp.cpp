@@ -9,10 +9,17 @@ void ofApp::setup(){
     ofSetBackgroundAuto(false);
     //glBlendFunc(GL_SRC_ALPHA, GL_ONE);
     
+    light.enable();
+    light.setPosition(-100, 100, 500);
+    light.setAmbientColor(ofFloatColor(0.5));
+
+    
     
     ofTrueTypeFont::setGlobalDpi(100);
-    font.loadFont("SourceHanCodeJP-Normal.otf",10,true,true);
+    //font.loadFont("SourceHanCodeJP-Normal.otf",10,true,true);
     //font.loadFont("A-OTF-FolkPro-Regular.otf",10,true,true);
+    font.loadFont("Bauhaus-Light.otf",15,true,true);
+    
     
     //dataフォルダに配置したcsvファイルの名前
     string filePath = "003_ST.csv";
@@ -88,6 +95,7 @@ void ofApp::draw(){
     morph_bli1 = ofLerp(bli1, next_bli1, percent);
     
     int min_color = 200;
+    //int min_color = 0;
     
     color_sle = ofMap(morph_sle, min_value_sle, max_value_sle, min_color, 255);
     color_foc = ofMap(morph_foc, min_value_foc, max_value_foc, min_color, 255);
@@ -124,36 +132,97 @@ void ofApp::draw(){
         
         
         
-        percent += 0.05;
+        percent += 0.5;
     }
     
-    ofSetColor(color_foc, color_cad, color_eye, 50);
-    //ofSetColor(color_foc, min_color, min_color, 50);
+    /*
     ofSetLineWidth(100);
+    int vertex_x = 6;
     
-    /*ofBeginShape();
-    ofVertex(morph_sle, h);
-    ofVertex(morph_eye/10, h);
-    ofVertex(morph_foc, h);
-    ofVertex(morph_cad, h);
-    ofVertex(morph_bli, h);
-    ofEndShape();*/
-    
-    int rectSize_x = 1;
-    int rectSize_y = 1;
-    ofFill();
+    ofPushMatrix();
     ofSetColor(color_foc, color_cad, color_eye, 50);
-    ofDrawCircle(morph_eye *rectSize_x, h, morph_eye *rectSize_x, morph_eye *rectSize_y);
     
+    ofBeginShape();
+    ofVertex(morph_sle *vertex_x, h);
+    ofVertex(morph_eye/10 *vertex_x, h);
+    ofVertex(morph_foc *vertex_x, h);
+    ofVertex(morph_cad *vertex_x, h);
+    ofVertex(morph_bli *vertex_x, h);
+    ofEndShape();
+    ofPopMatrix();
+    
+    ofPushMatrix();
+    //ofRotateY(ofWrapRadians(-90));
     ofSetColor(color_foc1, color_cad1, color_eye1, 50);
     
     ofBeginShape();
-    ofVertex(-morph_sle1+ofGetWidth(), h);
-    ofVertex(-morph_eye1/10+ofGetWidth(), h);
-    ofVertex(-morph_foc1+ofGetWidth(), h);
-    ofVertex(-morph_cad1+ofGetWidth(), h);
-    ofVertex(-morph_bli1+ofGetWidth(), h);
+    ofVertex(-morph_sle1 *vertex_x + ofGetWidth(), h);
+    ofVertex(-morph_eye1/10 *vertex_x + ofGetWidth(), h);
+    ofVertex(-morph_foc1 *vertex_x + ofGetWidth(), h);
+    ofVertex(-morph_cad1 *vertex_x + ofGetWidth(), h);
+    ofVertex(-morph_bli1 *vertex_x + ofGetWidth(), h);
     ofEndShape();
+    ofPopMatrix();
+     */
+     
+    /*
+    int eli_x = 20;
+    int eli_size = 5;
+    int eli_alpha = 100;
+    ofSetLineWidth(1);
+    ofNoFill();
+    
+    ofSetColor(255, color_foc, 0, eli_alpha);
+    ofDrawEllipse(morph_sle *eli_x, h, eli_size, eli_size);
+    ofDrawEllipse(morph_eye/10 *eli_x, h, eli_size, eli_size);
+    ofDrawEllipse(morph_bli *eli_x, h, eli_size, eli_size);
+    ofDrawEllipse(morph_foc *eli_x, h, eli_size, eli_size);
+    
+    ofSetColor(255, color_foc1,0, eli_alpha);
+    ofDrawEllipse(-morph_sle1    *eli_x +ofGetWidth(), h, eli_size, eli_size);
+    ofDrawEllipse(-morph_eye1/10 *eli_x +ofGetWidth(), h, eli_size, eli_size);
+    ofDrawEllipse(-morph_bli1    *eli_x +ofGetWidth(), h, eli_size, eli_size);
+    ofDrawEllipse(-morph_foc1    *eli_x +ofGetWidth(), h, eli_size, eli_size);
+     */
+    
+    /*
+    int box_size = 20;
+    int box_x = 10;
+    int box_alpha = 100;
+    
+    ofFill();
+    
+    ofSetColor(150, color_sle, 200, box_alpha);
+    ofPushMatrix();
+    ofTranslate(morph_sle *box_x, h);
+    ofRotate(morph_sle *ofGetFrameRate());
+    ofDrawBox(box_size);
+    ofPopMatrix();
+    
+    ofSetColor(250, color_foc, 200, box_alpha);
+    ofPushMatrix();
+    ofTranslate(morph_foc *box_x, h);
+    ofRotate(morph_foc *ofGetFrameRate());
+    ofDrawBox(box_size);
+    ofPopMatrix();
+    
+    ofSetColor(150, color_bli, 50, box_alpha);
+    ofPushMatrix();
+    ofTranslate(morph_bli *box_x, h);
+    ofRotate(morph_bli *ofGetFrameRate());
+    ofDrawBox(box_size);
+    ofPopMatrix();
+
+    ofSetColor(250, color_eye, 50, box_alpha);
+    ofPushMatrix();
+    ofTranslate(morph_eye/10 *box_x, h);
+    ofRotate(morph_eye *ofGetFrameRate());
+    ofDrawBox(box_size);
+    ofPopMatrix();
+     */
+    
+    
+    ofDrawEllipse(ofGetWidth()/2, ofGetHeight()/2, 100, 100);
 
     
     if(percent >= 1.0){
@@ -184,28 +253,27 @@ void ofApp::draw(){
             bli1 = memes1[index1].blink1;
             next_bli1 = memes1[index1+1].blink1;
             
-            h++;
+            h+= 10;
         }
         percent = 0;
     }
     
     
-    
+    /*
+    ofFill();
+    //ofSetColor(86,175,185);
+    ofSetColor(0);
     for (int i = 0; i < 10; i++){
-        ofFill();
-        ofSetColor(0,0,0);
         float fw = font.stringWidth(""+ofToString(0));
         float x = ofGetWidth()/2-fw/2;
-        font.drawString(""+ofToString(i), x, 5+(ofGetHeight()/24)*i);
+        font.drawString(""+ofToString(i), x, 20 + ((ofGetHeight()-20) /24)*i);
     }
     for (int i = 10; i < 25; i++){
-        ofFill();
-        ofSetColor(0,0,0);
         float fw = font.stringWidth(""+ofToString(10));
         float x = ofGetWidth()/2-fw/2;
-        font.drawString(""+ofToString(i), x, 5+(ofGetHeight()/24)*i);
+        font.drawString(""+ofToString(i), x, 20+((ofGetHeight()-20)/24)*i);
     }
-    
+    */
 
     
     
