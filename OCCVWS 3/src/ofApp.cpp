@@ -94,19 +94,31 @@ void ofApp::draw(){
     morph_cad1 = ofLerp(cad1, next_cad1, percent);
     morph_bli1 = ofLerp(bli1, next_bli1, percent);
     
-    int min_color = 200;
-    //int min_color = 0;
     
+    /*min_color = 0;
     color_sle = ofMap(morph_sle, min_value_sle, max_value_sle, min_color, 255);
     color_foc = ofMap(morph_foc, min_value_foc, max_value_foc, min_color, 255);
     color_eye = ofMap(morph_eye, min_value_eye, max_value_eye, min_color, 255);
     color_cad = ofMap(morph_cad, min_value_cad, max_value_cad, min_color, 255);
     color_bli = ofMap(morph_bli, min_value_bli, max_value_bli, min_color, 255);
-    float color_sle1 = ofMap(morph_sle1, min_value_sle1, max_value_sle1, min_color, 255);
-    float color_foc1 = ofMap(morph_foc1, min_value_foc1, max_value_foc1, min_color, 255);
-    float color_eye1 = ofMap(morph_eye1, min_value_eye1, max_value_eye1, min_color, 255);
-    float color_cad1 = ofMap(morph_cad1, min_value_cad1, max_value_cad1, min_color, 255);
-    float color_bli1 = ofMap(morph_bli1, min_value_bli1, max_value_bli1, min_color, 255);
+    color_sle1 = ofMap(morph_sle1, min_value_sle1, max_value_sle1, min_color, 255);
+    color_foc1 = ofMap(morph_foc1, min_value_foc1, max_value_foc1, min_color, 255);
+    color_eye1 = ofMap(morph_eye1, min_value_eye1, max_value_eye1, min_color, 255);
+    color_cad1 = ofMap(morph_cad1, min_value_cad1, max_value_cad1, min_color, 255);
+    color_bli1 = ofMap(morph_bli1, min_value_bli1, max_value_bli1, min_color, 255);
+    */
+    
+    min_colorB = 200;
+    color_sleB = ofMap(morph_sle, min_value_sle, max_value_sle, min_colorB, 255);
+    color_focB = ofMap(morph_foc, min_value_foc, max_value_foc, min_colorB, 255);
+    color_eyeB = ofMap(morph_eye, min_value_eye, max_value_eye, min_colorB, 255);
+    color_cadB = ofMap(morph_cad, min_value_cad, max_value_cad, min_colorB, 255);
+    color_bliB = ofMap(morph_bli, min_value_bli, max_value_bli, min_colorB, 255);
+    color_sle1B = ofMap(morph_sle1, min_value_sle1, max_value_sle1, min_colorB, 255);
+    color_foc1B = ofMap(morph_foc1, min_value_foc1, max_value_foc1, min_colorB, 255);
+    color_eye1B = ofMap(morph_eye1, min_value_eye1, max_value_eye1, min_colorB, 255);
+    color_cad1B = ofMap(morph_cad1, min_value_cad1, max_value_cad1, min_colorB, 255);
+    color_bli1B = ofMap(morph_bli1, min_value_bli1, max_value_bli1, min_colorB, 255);
     
     
     
@@ -135,13 +147,12 @@ void ofApp::draw(){
         percent += 0.5;
     }
     
-    /*
+    
+    //--------
     ofSetLineWidth(100);
-    int vertex_x = 6;
+    vertex_x = 6;
     
-    ofPushMatrix();
-    ofSetColor(color_foc, color_cad, color_eye, 50);
-    
+    ofSetColor(color_focB, 150,100, 100);
     ofBeginShape();
     ofVertex(morph_sle *vertex_x, h);
     ofVertex(morph_eye/10 *vertex_x, h);
@@ -149,12 +160,8 @@ void ofApp::draw(){
     ofVertex(morph_cad *vertex_x, h);
     ofVertex(morph_bli *vertex_x, h);
     ofEndShape();
-    ofPopMatrix();
     
-    ofPushMatrix();
-    //ofRotateY(ofWrapRadians(-90));
-    ofSetColor(color_foc1, color_cad1, color_eye1, 50);
-    
+    ofSetColor(color_foc1B, 200,200, 100);
     ofBeginShape();
     ofVertex(-morph_sle1 *vertex_x + ofGetWidth(), h);
     ofVertex(-morph_eye1/10 *vertex_x + ofGetWidth(), h);
@@ -162,30 +169,44 @@ void ofApp::draw(){
     ofVertex(-morph_cad1 *vertex_x + ofGetWidth(), h);
     ofVertex(-morph_bli1 *vertex_x + ofGetWidth(), h);
     ofEndShape();
-    ofPopMatrix();
-     */
      
-    /*
-    int eli_x = 20;
-    int eli_size = 5;
-    int eli_alpha = 100;
+     
+    //--------
+    eli_x = 10;
+    eli_size = 10;
+    eli_alpha = 100;
     ofSetLineWidth(1);
     ofNoFill();
     
-    ofSetColor(255, color_foc, 0, eli_alpha);
+    /*
     ofDrawEllipse(morph_sle *eli_x, h, eli_size, eli_size);
     ofDrawEllipse(morph_eye/10 *eli_x, h, eli_size, eli_size);
     ofDrawEllipse(morph_bli *eli_x, h, eli_size, eli_size);
     ofDrawEllipse(morph_foc *eli_x, h, eli_size, eli_size);
-    
+     
     ofSetColor(255, color_foc1,0, eli_alpha);
     ofDrawEllipse(-morph_sle1    *eli_x +ofGetWidth(), h, eli_size, eli_size);
     ofDrawEllipse(-morph_eye1/10 *eli_x +ofGetWidth(), h, eli_size, eli_size);
     ofDrawEllipse(-morph_bli1    *eli_x +ofGetWidth(), h, eli_size, eli_size);
-    ofDrawEllipse(-morph_foc1    *eli_x +ofGetWidth(), h, eli_size, eli_size);
-     */
+    ofDrawEllipse(-morph_foc1    *eli_x +ofGetWidth(), h, eli_size, eli_size);*/
     
-    /*
+    //ofSetColor(color_focB, color_cadB, color_eyeB, 100);
+    ofSetColor(color_foc, 200, 200);
+    ofDrawEllipse(morph_sle    * eli_x + ofGetWidth()/2, h, eli_size, eli_size);
+    ofDrawEllipse(morph_eye/10 * eli_x + ofGetWidth()/2, h, eli_size, eli_size);
+    ofDrawEllipse(morph_bli    * eli_x + ofGetWidth()/2, h, eli_size, eli_size);
+    ofDrawEllipse(morph_foc    * eli_x + ofGetWidth()/2, h, eli_size, eli_size);
+    
+    //ofSetColor(color_foc1B, color_cad1B, color_eye1B, 100);
+    ofSetColor(color_foc1, 200, 200);
+    ofDrawEllipse(-morph_sle1     * eli_x +ofGetWidth()/2, h, eli_size, eli_size);
+    ofDrawEllipse(-morph_eye1/10  * eli_x +ofGetWidth()/2, h, eli_size, eli_size);
+    ofDrawEllipse(-morph_bli1     * eli_x +ofGetWidth()/2, h, eli_size, eli_size);
+    ofDrawEllipse(-morph_foc1     * eli_x +ofGetWidth()/2, h, eli_size, eli_size);
+    
+     
+    
+    /*//--------
     int box_size = 20;
     int box_x = 10;
     int box_alpha = 100;
@@ -219,10 +240,8 @@ void ofApp::draw(){
     ofRotate(morph_eye *ofGetFrameRate());
     ofDrawBox(box_size);
     ofPopMatrix();
-     */
+    */
     
-    
-    ofDrawEllipse(ofGetWidth()/2, ofGetHeight()/2, 100, 100);
 
     
     if(percent >= 1.0){
@@ -253,14 +272,12 @@ void ofApp::draw(){
             bli1 = memes1[index1].blink1;
             next_bli1 = memes1[index1+1].blink1;
             
-            h+= 10;
+            h+= 1;
         }
         percent = 0;
     }
     
-    
-    /*
-    ofFill();
+        ofFill();
     //ofSetColor(86,175,185);
     ofSetColor(0);
     for (int i = 0; i < 10; i++){
@@ -273,7 +290,7 @@ void ofApp::draw(){
         float x = ofGetWidth()/2-fw/2;
         font.drawString(""+ofToString(i), x, 20+((ofGetHeight()-20)/24)*i);
     }
-    */
+
 
     
     

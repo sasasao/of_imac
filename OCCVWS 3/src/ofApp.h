@@ -65,6 +65,7 @@ public:
     float sle;
     float next_sle;
     float morph_sle;
+    
     float sle1;
     float next_sle1;
     float morph_sle1;
@@ -97,6 +98,9 @@ public:
     float next_bli1;
     float morph_bli1;
     
+    
+
+
     
     
     int h;
@@ -134,19 +138,38 @@ public:
     
     
     
-    
-    
-    
-    
+    int   min_color = 0;
+    int   min_colorB = 0;
     
     float color_sle = 0;
     float color_foc = 0;
     float color_eye = 0;
     float color_cad = 0;
     float color_bli = 0;
+    float color_sle1 = 0;
+    float color_foc1 = 0;
+    float color_eye1 = 0;
+    float color_cad1 = 0;
+    float color_bli1 = 0;
     
+    float color_sleB = 0;
+    float color_focB = 0;
+    float color_eyeB = 0;
+    float color_cadB = 0;
+    float color_bliB = 0;
+    float color_sle1B = 0;
+    float color_foc1B = 0;
+    float color_eye1B = 0;
+    float color_cad1B = 0;
+    float color_bli1B = 0;
+
     
-    float Rotate = 0;
+    int vertex_x = 0;
+    
+    float eli_x = 0;
+    float eli_size = 0;
+    float eli_alpha = 0;
+    
     
     ofLight light;
     
