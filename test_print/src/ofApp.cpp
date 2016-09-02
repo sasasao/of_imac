@@ -2,7 +2,7 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-    ofBeginSaveScreenAsPDF("text_print" + ofGetTimestampString() + ".ai");
+    ofBeginSaveScreenAsPDF("text_print" + ofGetTimestampString() + " .ai");
     
     //画面基本設定
     ofSetFrameRate(60);

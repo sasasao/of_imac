@@ -155,6 +155,7 @@ void ofApp::draw(){
     
     ofSetColor(color_foc, 0, color_sle, alpha);
     ofDrawLine(0, h+time, morph_eye *vertex_x, h+time);
+    ofRotateY(90);
     
     ofSetColor(color_foc1, 0, color_sle1, alpha);
     ofDrawLine(ofGetWidth(), h +time1, -morph_eye1 *vertex_x + ofGetWidth(), h +time1);
