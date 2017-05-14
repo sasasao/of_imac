@@ -23,4 +23,8 @@ public:
     ofMesh myMesh;
     ofEasyCam cam;
     ofLight light;
+    
+    float H = 100;
+    float S = 5;
+    float B = 250;
 };

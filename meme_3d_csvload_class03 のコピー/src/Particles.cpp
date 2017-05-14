@@ -2,7 +2,7 @@
 
 Particles::Particles(int _maxParticles, string filePath_meme, string filePath_first){
     
-    centerPos = ofVec3f(ofRandom(-100, 100), ofRandom(-100, 100), -200);
+    centerPos = ofVec3f(ofRandom(-500, 100), ofRandom(-100, 100), -200);
     
     centerVelocity = ofVec3f(ofRandom(1), ofRandom(1), ofRandom(1));
     

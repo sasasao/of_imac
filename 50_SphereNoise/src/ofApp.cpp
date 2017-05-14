@@ -1,7 +1,9 @@
 #include "ofApp.h"
 
+
 //--------------------------------------------------------------
 void ofApp::setup(){
+    
     //画面基本設定
     ofSetFrameRate(60);
     ofBackground(0);
@@ -10,7 +12,10 @@ void ofApp::setup(){
     light.enable();
     light.setPosition(-100, 100, 500);
     //球からメッシュを生成
-    myMesh = ofSpherePrimitive(200, 72).getMesh();
+    
+    float s = ofMap(S, 0, 255, 3, 100);
+    
+    myMesh = ofSpherePrimitive(200, s).getMesh();
     //メッシュの色を設定
     for (int i = 0; i < myMesh.getVertices().size(); i++) {
         myMesh.addColor(ofFloatColor(1.0, 1.0, 1.0, 1.0));
@@ -19,18 +24,22 @@ void ofApp::setup(){
 
 //--------------------------------------------------------------
 void ofApp::update(){
+    float b = ofMap(B, 0, 255, 10, 500);
+    
     //頂点の数だけ繰り返し
     for (int i = 0; i < myMesh.getVertices().size(); i++) {
         //頂点の位置を取得
-        ofVec3f loc = myMesh.getVertices()[i] / 300.0;
+        ofVec3f loc = myMesh.getVertices()[i] / b;
         //perlinノイズを生成
+        
         float noise = ofMap(ofNoise(loc.x, loc.y, loc.z, ofGetElapsedTimef()), 0, 1, 80, 240);
         //ノイズの値で頂点位置を変更
         ofVec3f newLoc = loc.normalize()* noise;
         myMesh.setVertex(i, newLoc);
         //頂点の色を設定
         float c = ofMap(ofNoise(loc.x, loc.y, loc.z, ofGetElapsedTimef()),0, 1, 0.5, 1.0);
-        myMesh.setColor(i, ofFloatColor(c, c, c, 1.0));
+        //myMesh.setColor(i, ofFloatColor(c, c, c, 1.0));
+        myMesh.setColor(i, ofFloatColor(H,S,B));
     }
 }
 
@@ -40,6 +49,7 @@ void ofApp::draw(){
     cam.begin();
     ofPushMatrix();
     ofRotateY(ofGetElapsedTimef()*10.0);
+    //myMesh.drawWireframe();
     myMesh.draw();
     ofPopMatrix();
     cam.end();
