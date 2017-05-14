@@ -21,7 +21,9 @@ void testApp::setup() {
     
     ofSetFrameRate(60);
     ofBackground(255);
+    ofSetColor(0, 0, 0, 0.1);
     ofSetVerticalSync(false);
+    ofSetBackgroundAuto(true);
    
     
 #ifdef USE_GUI
@@ -55,13 +57,14 @@ void testApp::setup() {
     pMouse = msa::getWindowCenter();
     resizeFluid			= true;
     
-    ofEnableAlphaBlending();
-    ofSetBackgroundAuto(true);
+//    ofEnableAlphaBlending();
+    
 }
 
 
 void testApp::fadeToColor(float r, float g, float b, float speed) {
-
+    glColor4f(r, g, b, speed);
+    ofDrawRectangle(0, 0, ofGetWidth(), ofGetHeight());
 }
 
 
@@ -125,32 +128,26 @@ void testApp::draw(){
         particleSystem.updateAndDraw(fluidSolver, ofGetWindowSize(), drawFluid);
 
     
-    float ellipsePos = 500;
-    for (int i=0; i<ofGetHeight(); i+=100) {
-        ofSetColor(0);
-        ofDrawEllipse(ellipsePos, i, 10, 10);
-        ofVec2f eventPos = ofVec2f(ellipsePos,i);
-        ofVec2f mouseNorm = ofVec2f(eventPos) / ofGetWindowSize();
-        ofVec2f mouseVel = ofVec2f(10,0) / ofGetWindowSize();
-        addToFluid(mouseNorm, mouseVel, true, true);
-        pMouse = eventPos;
+    float r = 50;
+    float x = t * 20;
+    float y = sin(t) * r;
+        
+    for (int i=0; i<ofGetHeight(); i+=200) {
+    
+    ofDrawEllipse(x, y +i, 10, 10);
+    eventPos = ofVec2f(x ,y +i);
+    mouseNorm = ofVec2f(eventPos) / ofGetWindowSize();
+    mouseVel = ofVec2f(10,0) / ofGetWindowSize();
+    addToFluid(mouseNorm, mouseVel, true, true);
+    pMouse = eventPos;
+        
+        if(x > ofGetWidth()){
+            t = 0;
+        }
     }
-
-//    
-//    for (int i=0; i<ofGetWidth(); i+=100) {
-//        ofSetColor(0);
-//        ofDrawEllipse(0, i, 10, 10);
-//        ofVec2f eventPos = ofVec2f(i, 0);
-//        ofVec2f mouseNorm = ofVec2f(eventPos) / ofGetWindowSize();
-//        ofVec2f mouseVel = ofVec2f(0, 10) / ofGetWindowSize();
-//        addToFluid(mouseNorm, mouseVel, true, true);
-//        pMouse = eventPos;
-//    }
-
     
-    
-#ifdef USE_GUI
-        gui.draw();
-#endif
+//#ifdef USE_GUI
+//        gui.draw();
+//#endif
 }
 

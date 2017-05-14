@@ -46,6 +46,9 @@ public:
     bool                    drawParticles;
     
     float t;
+    ofVec2f eventPos;
+    ofVec2f mouseNorm;
+    ofVec2f mouseVel;
     
     msa::fluid::Solver      fluidSolver;
     msa::fluid::DrawerGl	fluidDrawer;
