@@ -148,7 +148,7 @@ void testApp::draw(){
     
     
 #ifdef USE_GUI
-        gui.draw();
+//        gui.draw();
 #endif
 }
 
