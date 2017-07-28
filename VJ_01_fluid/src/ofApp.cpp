@@ -12,7 +12,7 @@ void ofApp::setup(){
     
     snd.load("Sorry.mp3");
     snd.setVolume(0.05f);
-    lineModule.load("01.png");
+    lineModule.load("nisimi.png");
     snd.play();
     snd.setLoop(true);
     
@@ -31,7 +31,7 @@ void ofApp::update(){
 void ofApp::draw(){
     
     ofNoFill();
-    ofSetColor(0);
+//    ofSetColor(0);
     ofSetLineWidth(2.0);
     ofBeginShape();
     
